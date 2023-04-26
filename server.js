@@ -1,6 +1,6 @@
 // Import helper files and Utils here
 const inquirer = require('inquirer');
-// const { disDepartments, disRoles, disEmployees, addDepartment, addRole, addEmployee}
+const queryInit = require('./assets/query.sql')
 
 inquirer.prompt([
 
@@ -21,31 +21,36 @@ inquirer.prompt([
         ]
     },
 ]).then((answers) => {
+
+    // Runs multiple conditional statements based on user selection in the above prompt.
     switch (answers.userChoice) {
         case "View all departments":
-            // SQL command to display the department table values
+            // SQL command to show a formatted table that lists all the department names and ids.
 
             break;
         case "View all roles":
+            // Show a formatted table that lists the job title, role id, department that role belongs to, and the salary for that role.
             
             break;
         case "View all employees":
-            
+            // Show a formatted table that lists the employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to.
+
             break;
         case "Add a department":
-            
+            // Prompt the user to enter the name of the department and add it to the database.
+
             break;
         case "Add a role":
-            
+            // Prompt the user to enter the name, salary, and department for the role and add it to the database.
+
             break;
         case "Add an employee":
-            
+            // Prompt the user to enter the employee’s first name, last name, role, and manager, and add it to the database.
+
             break;
         case "Update an employee role":
-            
-            break;
-        case "Quit":
-            
+            // Prompt the user to select an employee to update and their new role, and update that information in the database.
+
             break;
 
         default: return console.log("Exiting application.")
@@ -54,19 +59,3 @@ inquirer.prompt([
 }).catch((err) => {
     console.log('Error found:', err);
 });
-
-
-
-// If the user selects "view all departments," show a formatted table that lists all the department names and ids.
-
-// If the user selects "view all roles," show a formatted table that lists the job title, role id, department that role belongs to, and the salary for that role.
-
-// If the user selects "view all employees," show a formatted table that lists the employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to.
-
-// If the user selects "add a department," prompt the user to enter the name of the department and add it to the database.
-
-// If the user selects "add a role," prompt the user to enter the name, salary, and department for the role and add it to the database.
-
-// If the user selects "add an employee," prompt the user to enter the employee’s first name, last name, role, and manager, and add it to the database.
-
-// If the user selects "update an employee role," prompt the user to select an employee to update and their new role, and update that information in the database.
