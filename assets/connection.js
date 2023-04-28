@@ -46,9 +46,9 @@ showEmp: () => {
   });
 },
 
-addDept: () => {
-  db.query(`INSERT `)
-}
+// addDept: () => {
+//   db.query(`INSERT `)
+// }
 };
 
 module.exports = {db, promptInit};
