@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 // connect to database
-const connection = mysql.createConnection(
+const db = mysql.createConnection(
     {
       host: 'localhost',
       // MySQL username,
@@ -13,8 +13,42 @@ const connection = mysql.createConnection(
     console.log(`Connected to employees_db`)
   );
 
-  connection.connect((err) => {
+  db.connect((err) => {
     if(err) throw new Error('Error:', err);
 });
 
-module.exports = connection;
+const promptInit =  {
+
+showDept: () => {
+  db.query(`SELECT * FROM ?`, `department`, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result);
+  });
+},
+
+showRoles: () => {
+  db.query(`SELECT * FROM`, `roles`, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result);
+  });
+},
+
+showEmp: () => {
+  db.query(`SELECT * FROM`, `employees`, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result);
+  });
+},
+
+addDept: () => {
+  db.query(`INSERT INTO department ()`)
+}
+};
+
+module.exports = {db, promptInit};
