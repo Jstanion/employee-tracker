@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 // connect to database
 const db = mysql.createConnection(
@@ -10,45 +10,47 @@ const db = mysql.createConnection(
       password: 'root',
       database: 'employees_db'
     },
-    console.log(`Connected to employees_db`)
-  );
+);
 
-  db.connect((err) => {
-    if(err) throw new Error('Error:', err);
+db.connect((err) => {
+  if(err) {
+    console.log('Error connecting to database:', err);
+  } else {
+    console.log('Connected to employees_db');
+  }
 });
 
 const promptInit =  {
+  showDept: () => {
+    db.query(`SELECT * FROM department;`, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.table(result);
+    });
+  },
 
-showDept: () => {
-  db.query(`SELECT * FROM ?`, `department`, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(result);
-  });
-},
+  showRoles: () => {
+    db.query(`SELECT * FROM role`, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.table(result);
+    });
+  },
 
-showRoles: () => {
-  db.query(`SELECT * FROM`, `roles`, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(result);
-  });
-},
+  showEmp: () => {
+    db.query(`SELECT * FROM employee`, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.table(result);
+    });
+  },
 
-showEmp: () => {
-  db.query(`SELECT * FROM`, `employees`, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(result);
-  });
-},
-
-addDept: () => {
-  db.query(`INSERT INTO department ()`)
-}
+  addDept: () => {
+    db.query(`INSERT INTO department ()`)
+  }
 };
 
-module.exports = {db, promptInit};
+module.exports = {promptInit};
