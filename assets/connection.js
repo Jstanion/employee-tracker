@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const inquirer = require('inquirer');
 
 // connect to database
 const db = mysql.createConnection(
@@ -57,7 +58,22 @@ const promptInit =  {
   },
 
   addDept: () => {
-    db.query(`INSERT INTO department ()`)
+    // Prompts to add a new dept to database
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "deptName",
+        message: "What is the name of the department?"
+      }
+    ]).then((answers) => {
+      console.log(answers);
+      const deptName = answers.deptName;
+      db.query(`INSERT INTO department (name)
+      VALUES ('${deptName}')`);
+      console.log(`Added ${deptName} to the database.)`)
+    }).catch((err) => {
+        console.log('Error found:', err)
+    });
   }
 };
 
