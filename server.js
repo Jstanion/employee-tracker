@@ -49,11 +49,11 @@ const appInit = () => {
                 break;
             case "Add an employee":
                 // Prompt the user to enter the employee’s first name, last name, role, and manager, and add it to the database.
-
+                promptInit.addEmp();
                 break;
             case "Update an employee role":
                 // Prompt the user to select an employee to update and their new role, and update that information in the database.
-
+                promptInit.updateEmpRole();
                 break;
             default: return console.log("Exiting application.")
         }

@@ -119,6 +119,69 @@ const promptInit =  {
     });
   },
 
+  addEmp: () => {
+
+    // Prompts to add a new dept to database
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?"
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "What is the employee's last name?"
+      },
+      {
+        type: "list",
+        name: "empRole",
+        message: "What is the employee's role?",
+
+        // Query function to pull current values from the role table
+        choices: () => {
+          return new Promise((resolve, reject) => {
+            db.query("SELECT id, title FROM role", (err, results) => {
+              if (err) reject(err);
+              const choices = results.map((row) => ({
+                name: row.title,
+                value: parseInt(row.id),
+              }));
+              resolve(choices);
+            });
+          });
+        }
+      },
+      {
+        type: "list",
+        name: "empManager",
+        message: "Who is the employee's manager?",
+
+        // Query function to pull current values from department table
+        choices: () => {
+          return new Promise((resolve, reject) => {
+            db.query("SELECT CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name, employee.manager_id FROM employee JOIN employee AS manager ON employee.manager_id = manager.id", (err, results) => {
+              if (err) reject(err);
+              const choices = results.map((row) => ({
+                name: row.manager_name,
+                value: parseInt(row.manager_id),
+              }));
+              resolve(choices);
+            });
+          });
+        }
+      }
+    ]).then((answers) => {
+      console.log(answers.firstName, answers.lastName, answers.empRole, answers.empManager);
+      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+      VALUES 
+        ("${answers.firstName}", "${answers.lastName}", ${answers.empRole}, ${answers.empManager});`);
+      console.log(`Added ${answers.firstName} ${answers.lastName} to the database.`)
+    }).catch((err) => {
+        console.log('Error found:', err)
+    });
+  },
+
 };
 
 module.exports = {promptInit};
