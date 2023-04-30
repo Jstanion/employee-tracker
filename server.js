@@ -28,7 +28,8 @@ const appInit = () => {
             case "View all departments":
                 // SQL command to show a formatted table that lists all the department names and ids.
                 promptInit.showDept();
-                return appInit();
+                // return appInit()
+                break;
                 
             case "View all roles":
                 // Show a formatted table that lists the job title, role id, department that role belongs to, and the salary for that role.
