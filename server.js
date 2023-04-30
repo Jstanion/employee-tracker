@@ -45,7 +45,7 @@ const appInit = () => {
                 break;
             case "Add a role":
                 // Prompt the user to enter the name, salary, and department for the role and add it to the database.
-
+                promptInit.addRole();
                 break;
             case "Add an employee":
                 // Prompt the user to enter the employee’s first name, last name, role, and manager, and add it to the database.

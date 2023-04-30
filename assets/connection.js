@@ -66,15 +66,59 @@ const promptInit =  {
         message: "What is the name of the department?"
       }
     ]).then((answers) => {
-      console.log(answers);
       const deptName = answers.deptName;
       db.query(`INSERT INTO department (name)
       VALUES ('${deptName}')`);
-      console.log(`Added ${deptName} to the database.)`)
+      console.log(`Added ${deptName} to the database.`)
     }).catch((err) => {
         console.log('Error found:', err)
     });
-  }
+  },
+
+  addRole: () => {
+
+    // Prompts to add a new dept to database
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "roleName",
+        message: "What is the name of the role?"
+      },
+      {
+        type: "input",
+        name: "salAmt",
+        message: "What is the salary of the role?"
+      },
+      {
+        type: "list",
+        name: "deptChoice",
+        message: "Which department does the role belong to?",
+
+        // Query function to pull current values from department table
+        choices: () => {
+          return new Promise((resolve, reject) => {
+            db.query("SELECT * FROM department", (err, results) => {
+              if (err) reject(err);
+              const choices = results.map((row) => ({
+                name: row.name,
+                value: parseInt(row.id),
+              }));
+              resolve(choices);
+            });
+          });
+        }
+      }
+    ]).then((answers) => {
+      console.log(answers.roleName, answers.salAmt, answers.deptChoice);
+      db.query(`INSERT INTO role (title, salary, department_id)
+      VALUES 
+        ("${answers.roleName}", ${answers.salAmt}, ${answers.deptChoice});`);
+      console.log(`Added ${answers.roleName} to the database.`)
+    }).catch((err) => {
+        console.log('Error found:', err)
+    });
+  },
+
 };
 
 module.exports = {promptInit};
