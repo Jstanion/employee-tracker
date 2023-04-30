@@ -182,6 +182,56 @@ const promptInit =  {
     });
   },
 
+  updateEmpRole: () => {
+
+    // Prompts to add a new dept to database
+    inquirer.prompt([
+      {
+        type: "list",
+        name: "selectEmp",
+        message: "Which employee's role do you want to update?",
+
+        // Query function to pull current values from department table
+        choices: () => {
+          return new Promise((resolve, reject) => {
+            db.query("SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee", (err, results) => {
+              if (err) reject(err);
+              const choices = results.map((row) => ({
+                name: row.name,
+                value: parseInt(row.id),
+              }));
+              resolve(choices);
+            });
+          });
+        }
+      },
+      {
+        type: "list",
+        name: "updatedRole",
+        message: "Which role do you want to assign the selected employee?",
+
+        // Query function to pull current values from the role table
+        choices: () => {
+          return new Promise((resolve, reject) => {
+            db.query("SELECT id, title FROM role", (err, results) => {
+              if (err) reject(err);
+              const choices = results.map((row) => ({
+                name: row.title,
+                value: parseInt(row.id),
+              }));
+              resolve(choices);
+            });
+          });
+        }
+      }
+    ]).then((answers) => {
+      console.log(answers.selectEmp, answers.updatedRole);
+      db.query(`UPDATE employee SET role_id = ${answers.updatedRole} WHERE id = ${answers.selectEmp}`);
+      console.log(`Update employee role`)
+    }).catch((err) => {
+        console.log('Error found:', err)
+    });
+  }
 };
 
 module.exports = {promptInit};
