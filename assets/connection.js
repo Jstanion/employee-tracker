@@ -32,7 +32,7 @@ const promptInit =  {
   },
 
   showRoles: () => {
-    db.query(`SELECT role.id, role.title, department.name, role.salary
+    db.query(`SELECT role.id, role.title, department.department_name, role.salary
     FROM role
     JOIN department ON role.department_id = department.id`, (err, result) => {
       
@@ -44,7 +44,7 @@ const promptInit =  {
   },
 
   showEmp: () => {
-    db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name
+    db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name
     FROM employee
     JOIN role ON employee.role_id = role.id
     JOIN department ON role.department_id = department.id
@@ -67,7 +67,7 @@ const promptInit =  {
       }
     ]).then((answers) => {
       const deptName = answers.deptName;
-      db.query(`INSERT INTO department (name)
+      db.query(`INSERT INTO department (department_name)
       VALUES ('${deptName}')`);
       console.log(`Added ${deptName} to the database.`)
     }).catch((err) => {
@@ -100,7 +100,7 @@ const promptInit =  {
             db.query("SELECT * FROM department", (err, results) => {
               if (err) reject(err);
               const choices = results.map((row) => ({
-                name: row.name,
+                name: row.department_name,
                 value: parseInt(row.id),
               }));
               resolve(choices);
