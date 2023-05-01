@@ -28,16 +28,18 @@ const appInit = () => {
             case "View all departments":
                 // SQL command to show a formatted table that lists all the department names and ids.
                 promptInit.showDept();
-                // return appInit()
-                break;
-                
+                setTimeout(() => appInit(), 300);
+                break; 
+
             case "View all roles":
                 // Show a formatted table that lists the job title, role id, department that role belongs to, and the salary for that role.
                 promptInit.showRoles();
+                setTimeout(() => appInit(), 300);
                 break;
             case "View all employees":
                 // Show a formatted table that lists the employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to.
                 promptInit.showEmp();
+                setTimeout(() => appInit(), 300);
                 break;
             case "Add a department":
                 // Prompt the user to enter the name of the department and add it to the database.
