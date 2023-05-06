@@ -4,7 +4,8 @@ const { promptInit } = require('./assets/connection.js')
 
 const appInit = async () => {
     const answers = await inquirer.prompt([
-        // Present options to the user:
+
+        // Present inintial options to the user:
         {
             type: "list",
             name: "userChoice",
@@ -32,6 +33,7 @@ const appInit = async () => {
             });
             break;
         case "View all roles":
+
             // Show a formatted table that lists the job title, role id, department that role belongs to, and the salary for that role.
             promptInit.showRoles().then(() => {
                 appInit();
@@ -40,6 +42,7 @@ const appInit = async () => {
             });
             break;
         case "View all employees":
+
             // Show a formatted table that lists the employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to.
             promptInit.showEmp().then(() => {
                 appInit();
@@ -48,6 +51,7 @@ const appInit = async () => {
             });
             break;
         case "Add a department":
+
             // Prompt the user to enter the name of the department and add it to the database.
             promptInit.addDept().then(() => {
                 appInit();
@@ -56,6 +60,7 @@ const appInit = async () => {
             });
             break;
         case "Add a role":
+
             // Prompt the user to enter the name, salary, and department for the role and add it to the database.
             promptInit.addRole().then(() => {
                 appInit();
@@ -64,6 +69,7 @@ const appInit = async () => {
             });
             break;
         case "Add an employee":
+
             // Prompt the user to enter the employee’s first name, last name, role, and manager, and add it to the database.
             promptInit.addEmp().then(() => {
                 appInit();
@@ -72,7 +78,8 @@ const appInit = async () => {
             });
             break;
         case "Update an employee role":
-            // Prompt the user to select an employee to update and their new role, and update that information in the database.
+
+            // Prompt the user to select an employee and to update their new role information in the database.
             promptInit.updateEmpRole().then(() => {
                 appInit();
             }).catch((err) => {
@@ -84,4 +91,5 @@ const appInit = async () => {
     }
 };
 
+// Calls initial function to run
 appInit();
