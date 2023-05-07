@@ -1,6 +1,14 @@
 // Import helper files and Utils here
 const inquirer = require('inquirer');
-const { promptInit } = require('./assets/connection.js')
+const { promptInit } = require('./assets/connection.js');
+const logo = require('asciiart-logo');
+
+const init = () => {
+    const logoText = logo({name: "Employee Tracker"}).render();
+    
+    console.log(logoText);
+    appInit();
+};
 
 const appInit = async () => {
     const answers = await inquirer.prompt([
@@ -92,4 +100,4 @@ const appInit = async () => {
 };
 
 // Calls initial function to run
-appInit();
+init();
